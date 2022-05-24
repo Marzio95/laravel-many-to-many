@@ -27,8 +27,9 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Text</th>
+                    <th scope="col">Tags</th>
                     <th scope="col">Categoria</th>
+                    <th scope="col">Text</th>
                 </tr>
             </thead>
 
@@ -37,6 +38,7 @@
                     <tr>
                         <th scope="row">{{ $post->id }}</th>
                         <td>{{ $post->title }}</td>
+                        <td>{{ $post->tags->pluck('name')->join(', ') }}</td>
                         <td>{{ $post->category->name }}</td>
                         <td>{{ $post->postText }}</td>
                         <td><a href="{{ route('admin.posts.show', $post->slug) }}">Post</a></td>

@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\User;
+use App\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -26,9 +27,9 @@ class PostController extends Controller
     {
 
         $posts = Post::where('title', 'LIKE', "%$request->s%")
-                        ->where('category_id', $request->category)
-                        ->where('user_id', $request->author)
-                        ->paginate(20);
+            ->where('category_id', $request->category)
+            ->where('user_id', $request->author)
+            ->paginate(20);
 
         $categories = Category::all();
         $users = User::all();
@@ -49,7 +50,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -58,16 +61,18 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
         $request->validate([
             'title' => 'required|unique:posts|max:20',
             'postText' => 'required|max:500',
             'slug' => 'required',
             'category_id' => 'required|exists:App\Category,id',
+            'tags' => 'exists:App\Tags.id'
         ]);
 
         $formData = $request->all() + ['user_id' => Auth::user()->id];
+        $post->tags()->attach($formData['tags']);
         $newPost = Post::create($formData);
         return redirect()->route('admin.posts.show', $newPost->slug);
     }

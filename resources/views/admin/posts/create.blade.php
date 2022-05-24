@@ -38,12 +38,21 @@
         <select class="mt-3 mb-3" name="category_id" id="category_id">
             <option selected value="">Select a Category</option>
             @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option> 
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
             @endforeach
         </select>
         @error('category')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+
+        <fieldset>
+            <legend>Tags</legend>
+            @foreach ($tags as $tag)
+                <input @if (in_array($tag->id, old('tags', []))) ? 'checked' : '' @endif type="checkbox" name="tags[]"
+                    id="tags {{ $tag->id }}">
+                <label for="tag {{ $tag->id }}">{{ $tag->name }}</label>
+            @endforeach
+        </fieldset>
 
 
         <div class="form-group row">
