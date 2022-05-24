@@ -1,0 +1,110 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.tasto_show {
+    border: 1px solid black;
+    padding: 0.5rem;
+    background-color: green;
+    width: inherit;
+    margin: 0.5rem auto;
+    text-transform: uppercase;
+}
+
+.tasto_show:hover {
+    color: crimson;
+}
+
+a {
+    text-decoration: none;
+    color: gold;
+}
+
+.overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1312;
+    background-color: white;
+}  
+.popup {
+    background-color: lightgray;
+    width: 650px;
+    height: 300px;
+    padding: 1rem;
+    border: 1px solid black;
+    text-align: center;
+    padding-top: 3rem;
+}
+
+#btn-no {
+    width: 120px;
+    border: 2px solid black;
+    color: white;
+    border-radius: 0 !important;
+}
+
+.btn-delete {
+    width: inherit;
+    text-align: center;
+    margin: 0.5rem auto;
+}
+
+tr a {
+    color: blue;
+    margin-right: 3rem;
+}
+
+.mybtn_list {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 10rem;
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.my_btn_link {
+    border: none;
+    background-color: transparent;
+    color: blue;
+}
+
+.my_btn_link:hover {
+    color: #2a73b0;
+}
+
+td .my_btn_link {
+    margin: 0 0 0 0;
+}
+
+.card-body h3 {
+    font-weight: bold;
+}
+
+.my_navbar_posts {
+    flex-grow: 1312;
+}
+
+.my_ul_nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-item:hover {
+    height: 100%;
+    background-color: white;
+}
+
+.nav-link .active {
+    color: black !important;
+}
+
+
