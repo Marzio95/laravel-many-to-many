@@ -141,7 +141,7 @@ class PostController extends Controller
 
         $formData = $request->all();
         $post->update($formData);
-        $post->tags()->sinc($formData['tags']);
+        $post->tags()->sync($formData['tags']);
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
