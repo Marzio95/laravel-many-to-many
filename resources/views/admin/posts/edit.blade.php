@@ -30,6 +30,25 @@
             </div>
         </div>
 
+        <select class="mt-3 mb-3" name="category_id" id="category_id">
+            <option selected value="">Select a Category</option>
+            @foreach ($categories as $category)
+                <option value="{{ old('category_id', $category->id) }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+        @error('category')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
+        <fieldset class="mb-5">
+            <legend>Tags</legend>
+            @foreach ($tags as $tag)
+                <input @if (in_array($tag->id, old('tags', []))) checked @endif type="checkbox" name="tags[]"
+                    id="tag-{{ $tag->id }}" value="{{ old('tags[]', $tag->id) }}">
+                <label for="tag {{ $tag->id }}">{{ $tag->name }}</label>
+            @endforeach
+        </fieldset>
+
         <div class="form-group row">
             <label for="postText" class="col-sm-2 col-form-label">Text</label>
             <div class="col-sm-10">

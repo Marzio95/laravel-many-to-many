@@ -25,20 +25,34 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $posts = Post::whereRaw('1 = 1');
 
-        $posts = Post::where('title', 'LIKE', "%$request->s%")
-            ->where('category_id', $request->category)
-            ->where('user_id', $request->author)
-            ->paginate(20);
+        if ($request->s) {
+            $posts->where(function ($query) use ($request) {
+                $query->where('title', 'LIKE', "%$request->s%")
+                    ->orWhere('content', 'LIKE', "%$request->s%");
+            });
+        }
+
+        if ($request->category) {
+            $posts->where('category_id', $request->category);
+        }
+
+        if ($request->author) {
+            $posts->where('user_id', $request->author);
+        }
+
+        $posts = $posts->paginate(20);
 
         $categories = Category::all();
         $users = User::all();
 
-        $posts = Post::paginate(20);
+        // $posts = Post::paginate(20);
         return view('admin.posts.index', [
             'posts' => $posts,
             'categories' => $categories,
             'users' => $users,
+            'request' => $request,
         ]);
     }
 
@@ -103,7 +117,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         if (Auth::user()->id === $post->user_id) {
-            return view('admin.posts.edit', compact('post'));
+            $categories = Category::all();
+            $tags = Tag::all();
+            return view('admin.posts.edit', compact('post', 'categories', 'tags'));
         }
         abort(403);
     }
@@ -125,6 +141,7 @@ class PostController extends Controller
 
         $formData = $request->all();
         $post->update($formData);
+        $post->tags()->sinc($formData['tags']);
         return redirect()->route('admin.posts.show', $post->slug);
     }
 
