@@ -52,7 +52,10 @@ class PostController extends Controller
         $categories = Category::all();
         $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories', 'tags'));
+        return view('admin.posts.create', [
+            'categories' => $categories,
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -68,13 +71,13 @@ class PostController extends Controller
             'postText' => 'required|max:500',
             'slug' => 'required',
             'category_id' => 'required|exists:App\Category,id',
-            'tags' => 'exists:App\Tags.id'
+            'tags' => 'exists:App\Tag,id'
         ]);
 
         $formData = $request->all() + ['user_id' => Auth::user()->id];
+        $post = Post::create($formData);
         $post->tags()->attach($formData['tags']);
-        $newPost = Post::create($formData);
-        return redirect()->route('admin.posts.show', $newPost->slug);
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**

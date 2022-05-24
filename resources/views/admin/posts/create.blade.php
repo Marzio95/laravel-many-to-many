@@ -45,11 +45,11 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
-        <fieldset>
+        <fieldset class="mb-5">
             <legend>Tags</legend>
             @foreach ($tags as $tag)
-                <input @if (in_array($tag->id, old('tags', []))) ? 'checked' : '' @endif type="checkbox" name="tags[]"
-                    id="tags {{ $tag->id }}">
+                <input @if (in_array($tag->id, old('tags', []))) checked @endif type="checkbox" name="tags[]"
+                    id="tag-{{ $tag->id }}" value="{{ $tag->id }}">
                 <label for="tag {{ $tag->id }}">{{ $tag->name }}</label>
             @endforeach
         </fieldset>
