@@ -29,17 +29,13 @@
                     <tr>
                         <th scope="row">{{ $category->id }}</th>
                         <td>{{ $category->name }}</td>
-                        <td><a href="{{ route('admin.categories.show', $category->id) }}">category</a></td>
+                        <td><a href="{{ route('admin.categories.show', $category->id) }}">Category</a></td>
                         <td>
-                            @if (Auth::user()->id === $category->user_id)
-                                <a href="{{ route('admin.categories.edit', $category->id) }}">Modifica category</a>
-                            @endif
+                            <a href="{{ route('admin.categories.edit', $category->id) }}">Modifica category</a>
                         </td>
                         <td>
-                            @if (Auth::user()->id === $category->user_id)
-                                <button data-id="{{ $category->id }}" onclick="event.stopPropagation()"
-                                    class="my_btn_link btn-delete">Elimina category</button>
-                            @endif
+                            <button data-id="{{ $category->id }}" onclick="event.stopPropagation()"
+                                class="my_btn_link btn-delete">Elimina category</button>
                         </td>
                     </tr>
                 @endforeach
@@ -55,7 +51,7 @@
                         @csrf
                         @method('DELETE')
                         <button onclick="event.stopPropagation()" class="bg-danger text-white p-2 ">ELIMINA
-                            POST</button>
+                            CATEGORIA</button>
                     </form>
                     <button id="btn-no" class="btn bg-primary">NO</button>
                 </div>

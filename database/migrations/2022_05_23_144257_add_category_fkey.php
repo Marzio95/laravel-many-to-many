@@ -18,7 +18,8 @@ class AddCategoryFkey extends Migration
 
             $table->foreign('category_id')
                 ->references('id')
-                ->on('categories');
+                ->on('categories')
+                ->onDelete('SET NULL');
         });
     }
 

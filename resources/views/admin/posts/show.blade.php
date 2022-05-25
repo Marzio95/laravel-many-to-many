@@ -3,12 +3,14 @@
 
 @section('pageMain')
     <div class="d-flex justify-content-center align-items-center flex-column">
-        <div class="card m-5" style="width: 18rem;">
+        <div class="card m-5" style="width: 40rem; text-align: center">
             <div class="card-body">
                 <h3 class="card-title text-uppercase">{{ $post->title }}</h3>
-                <p class="card-text mb-3">{{ $post->postText }}.</p>
+                <p class="card-text mb-3 text-start">{{ $post->postText }}.</p>
                 <h5 class="card-title">{{ $post->user->name }}</h5>
-                <h5 class="card-title">{{ $post->user->userInfo->phone_number }}</h5>
+                @if ($post->user->userInfo && $post->user->userInfo->phone_number)
+                    <h5 class="card-title">{{ $post->user->userInfo->phone_number }}</h5>
+                @endif
                 <h5 class="card-title">{{ $post->Category->name }}</h5>
                 @if (Auth::user()->id === $post->user_id)
                     <a class="tasto_show bg-green mt-3" href="{{ route('admin.posts.edit', $post->slug) }}">Modifica

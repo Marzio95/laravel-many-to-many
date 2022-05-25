@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|max:20',
-            'description',
+            'description' => 'nullable',
         ]);
 
         $formData = $request->all();
@@ -99,8 +99,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->posts()->detach();
         $category->delete();
-        return view('admin.category.index');
+        return redirect()->route('admin.categories.index')->with('status', "Categoria $category->name eliminata");
     }
 }

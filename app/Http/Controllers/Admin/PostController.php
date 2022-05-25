@@ -163,14 +163,15 @@ class PostController extends Controller
     {
         if (Auth::user()->id !== $post->user_id) abort(403);
 
+        $post->tags()->detach();
         $post->delete();
 
         if (url()->previous() === route('admin.posts.edit', $post->slug)) {
-            return redirect()->route('admin.home')->with('status', "Post $post->title deleted");
+            return redirect()->route('admin.posts.index')->with('status', "Post $post->title deleted");
         }
         if (url()->previous() === route('admin.posts.show', $post->slug)) {
-            return redirect()->route('admin.home')->with('status', "Post $post->title deleted");
+            return redirect()->route('admin.posts.index')->with('status', "Post $post->title deleted");
         }
-        return redirect(url()->previous())->with('status', 'Profile updated!');
+        return redirect(url()->previous())->with('status', "Post $post->title deleted");
     }
 }
