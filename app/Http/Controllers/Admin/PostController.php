@@ -13,10 +13,17 @@ use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
-    public function myindex()
+    public function myindex(Request $request)
     {
+        $users = User::all();
+        $categories = Category::all();
         $posts = Post::where('user_id', Auth::user()->id)->paginate(20);
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', [
+            'posts' => $posts,
+            'categories' => $categories,
+            'users' => $users,
+            'request' => $request,
+        ]);
     }
     /**
      * Display a listing of the resource.
